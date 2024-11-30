@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:workshop_basilicata/item_detail.dart';
 import 'package:workshop_basilicata/item_model.dart';
 import 'package:workshop_basilicata/price_widget.dart';
 
@@ -21,10 +22,19 @@ class ItemListTile extends StatelessWidget {
         child: ListTile(
           leading: Icon(Icons.accessibility),
           title: Text(item.name),
-          subtitle: Text(item.description),
+          subtitle: Hero(tag: item.id, child: Text(item.description)),
           trailing: item.price > 0
-              ? PriceWidget(price: item.price)
+              ? Hero(
+                  tag: 'price ${item.id}',
+                  child: PriceWidget(price: item.price),)
               : null,
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) {
+                return ItemDetail(item: item);
+              },
+            ));
+          },
         ),
       ),
     );
